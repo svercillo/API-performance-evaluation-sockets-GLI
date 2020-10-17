@@ -27,14 +27,14 @@ This assignment uses socket programming to send requests to API endpoints gettin
 ##### My Cloudflare Website
 - `https://my-worker.snvercil.workers.dev:80/go-to-link`
 
-  ![](/screenshots/mycloudflare.PNG)
+  ![](/Capture.PNG)
 
   
 
 ##### Dummy Rest API    
 - `http://dummy.restapiexample.com:80/api/v1/employee/1`
 
-![](/screenshots/dummy.PNG)
+![](/Capture2.PNG)
 
 
 
