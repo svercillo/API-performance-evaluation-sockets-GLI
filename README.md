@@ -38,7 +38,7 @@ This assignment uses socket programming to send requests to API endpoints gettin
 
 
 
-## Observations on Perfomance##
+## Observations on Perfomance
 
 Cloudflare's website performs about 6 times faster than the dummy API website! (in the limited trials I had done) This is because Cloudflare optimizes the delivery of website resources. Cloudflare’s data centers serve website’s static resources and ask the orgin web server for dynamic content. Cloudflare’s global network provides a faster route from site visitors to the data centers than would be available to a visitor directly requesting one's site. Even with the Cloudflare interface between a website and requesters, resource requests arrive to the requester much sooner.
 
