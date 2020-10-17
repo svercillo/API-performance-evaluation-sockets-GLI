@@ -14,7 +14,7 @@
 #include <sys/time.h>   // for gettimeofday()
 
 // Set size for buffer size in linked list
-#define NODE_SIZE 4
+#define NODE_SIZE 1
 
 
 /*  Structs  */
@@ -54,8 +54,8 @@ void * print_response(void * param);
 
 //Example inputs
 // ./bin/socket --help
-// ./bin/socket --url=http://my-worker.snvercil.workers.dev:80/links --profile=5
-// ./bin/socket --url=http://dummy.restapiexample.com:80/api/v1/employee/1 --profile=10
+// ./bin/socket --url=http://my-worker.snvercil.workers.dev:80/links --profile=4
+// ./bin/socket --url=http://dummy.restapiexample.com:80/api/v1/employee/1 --profile=3
 // ./bin/socket --url=http://info.cern.ch:80/sfsdf  --profile=5
 
 int cmpfunc (const void * a, const void * b) {
@@ -65,6 +65,10 @@ int cmpfunc (const void * a, const void * b) {
 
 
 int main( int argc, char** argv ) {
+    if (argc < 3){
+        perror("Enter --help to find a usage guilde\n");
+        exit(1);
+    }
     long min_time = 2147483647;
     long max_time = -1;
     long total_time = 0;
@@ -211,44 +215,53 @@ buffer send_HTTP_request(input_data id){
 
 
 
-    /* The purpose of this section is to store an unknown amount of API 
+
+
+    
+        /* The purpose of this section is to store an unknown amount of API 
     data dynamically using a linked list one, for the purpose of reducing 
     latency, improving memory usage, and  not overflowing stack memory
     */
 
-    node * head = NULL;
-    head = (node*) malloc(sizeof(node));
-    memset(head, 0, sizeof(node));
-    head->next = NULL;
-    head->val = malloc(NODE_SIZE);
-    memset(head->val, 0, NODE_SIZE);
-
-    
-    node * temp = head;
-    int recv_bytes =0;
-    int n =1;
-    // the last parameter indicates it is a blocking proceedure
-    n = recv(clientsock, temp->val, NODE_SIZE, 0);
+    // node * head = NULL;
+    // head = (node*) malloc(sizeof(node));
+    // memset(head, 0, sizeof(node));
+    // head->next = NULL;
+    // head->val = malloc(NODE_SIZE);
+    // memset(head->val, 0, NODE_SIZE);
+    // node * temp = head;
+    // int recv_bytes =0;
+    // int n =1;
+    // // the last parameter indicates it is a blocking proceedure
+    // n = recv(clientsock, temp->val, NODE_SIZE, 0);
 
     // push new node to the top of the list and recieve more data
-    while (n >0){
-        temp->length = n;
-        recv_bytes += n;
-        temp->next = (node*) malloc(sizeof(node));
-        temp = temp->next; 
+    // while (n >0){
+    //     temp->length = n;
+    //     recv_bytes += n;
+    //     temp->next = (node*) malloc(sizeof(node));
+    //     temp = temp->next; 
 
-        temp->val = malloc(NODE_SIZE);
-        memset(temp->val, 0, NODE_SIZE);
-        // break;
-        n = recv(clientsock, temp->val, NODE_SIZE, 0);
-    }
-    free(temp->next);
-    temp->next = NULL;
+    //     temp->val = malloc(NODE_SIZE);
+    //     memset(temp->val, 0, NODE_SIZE);
+    //     // break;
+    //     n = recv(clientsock, temp->val, NODE_SIZE, 0);
+    // }
+    // free(temp->next);
+    // temp->next = NULL;
 
+    
+    // char * data;
+    // data = list_to_pointer(&head, recv_bytes);    
 
-    char * data;
-    data = list_to_pointer(&head, recv_bytes);    
-
+    
+    /* For future reference, use above code. For sake of this project,
+    I know the size will be well under 100000 bytes so this is fine*/  
+    char * data = malloc(2048);
+    memset(data, 0, 2048);
+    int recv_bytes =0;
+    recv_bytes = recv(clientsock, data, 2048, 0);  
+    
     buffer buff;
     char * http_status = check_response(&data);
     if (strcmp(http_status, "200") == 0){
