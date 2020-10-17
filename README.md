@@ -1,4 +1,4 @@
-# CloudFlare Systems Assignment
+# API Performance Evaluation GLI
 
 ## Purpose:
 This assignment uses socket programming to send requests to API endpoints getting JSON data in the form of either an a JSON array or object. A specified number of HTTP request is sent to a specified url, port and request link, and the return response is then parsed manually.  Some awesome stats are displayed on the requests sent including the average request time, max and min bytes recieved etc. and execution time.
